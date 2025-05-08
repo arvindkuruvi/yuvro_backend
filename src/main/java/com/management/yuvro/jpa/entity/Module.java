@@ -1,8 +1,6 @@
 package com.management.yuvro.jpa.entity;
 
-import java.util.Set;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import java.util.List;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
@@ -21,19 +19,18 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class SubTopic {
+public class Module {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long subTopicId;
-	private String subTopicName;
+	private Long moduleId;
+	private String moduleName;
 	private String description;
-	private boolean isTopicLocked;
+	private boolean isModuleLocked;
 
-	@JsonIgnore
 	@ManyToOne
-	@JoinColumn(name = "topic_id")
-	private Topic topic;
+	@JoinColumn(name = "course_id")
+	private Course course;
 
-	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "subTopic")
-	private Set<Question> questions;
+	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "module")
+	private List<Topic> topics;
 }

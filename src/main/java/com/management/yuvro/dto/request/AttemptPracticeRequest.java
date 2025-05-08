@@ -1,0 +1,13 @@
+package com.management.yuvro.dto.request;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@AllArgsConstructor
+@NoArgsConstructor
+@Data
+public class AttemptPracticeRequest {
+    private Long candidateId;
+    private Long topicId;
+}

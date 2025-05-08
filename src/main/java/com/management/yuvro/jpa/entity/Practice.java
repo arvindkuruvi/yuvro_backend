@@ -1,8 +1,6 @@
 package com.management.yuvro.jpa.entity;
 
-import java.util.Set;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import java.util.List;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
@@ -10,7 +8,8 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.ManyToMany;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -20,17 +19,17 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Subject {
+public class Practice {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long subjectId;
-	private String subjectName;
-	private String description;
-
-	@JsonIgnore
-	@ManyToMany(mappedBy = "subjects")
-	private Set<Batch> batches;
+	private Long practiceId;
 	
-	@OneToMany(mappedBy = "subject", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	private Set<Topic> topics;
+	private Long topicId;
+
+	@ManyToOne
+	@JoinColumn(name = "candidate_id")
+	private Candidate candidate;
+
+	@OneToMany(mappedBy = "practice", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	private List<PracticeQuestion> practiceQuestions;
 }

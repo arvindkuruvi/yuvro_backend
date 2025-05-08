@@ -1,15 +1,13 @@
 package com.management.yuvro.jpa.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import java.util.List;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.ManyToMany;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -17,14 +15,13 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
-public class MCQOptions {
+public class Institution {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long optionId;
-	private String option;
+	private Long institutionId;
+	private String institution;
+	private String institutionCode;
 
-	@ManyToOne
-	@JoinColumn(name = "question_id")
-	private MCQQuestion question;
+	@ManyToMany(mappedBy = "institutions")
+	private List<Batch> batches;
 }

@@ -1,6 +1,5 @@
-spring.application.name: yuvro
-
 spring:
+  application.name: yuvro
   datasource:
     url: jdbc:h2:mem:testdb
     driverClassName: org.h2.Driver

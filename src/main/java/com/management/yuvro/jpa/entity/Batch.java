@@ -1,6 +1,6 @@
 package com.management.yuvro.jpa.entity;
 
-import java.util.Set;
+import java.util.List;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -26,15 +26,20 @@ public class Batch {
 	private Long batchId;
 	@Column(unique = true)
 	private String batchName;
-	private String subject;
-	private String institutionName;
+	private String batchTitle;
+	private String description;
+	private String duration;
 
 	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinTable(name = "batch_candidate", joinColumns = @JoinColumn(name = "batch_id"), inverseJoinColumns = @JoinColumn(name = "candidate_id"))
-	private Set<Candidate> candidates;
+	private List<Candidate> candidates;
 
 	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	@JoinTable(name = "batch_subject", joinColumns = @JoinColumn(name = "batch_id"), inverseJoinColumns = @JoinColumn(name = "subject_id"))
-	private Set<Subject> subjects;
+	@JoinTable(name = "batch_institution", joinColumns = @JoinColumn(name = "batch_id"), inverseJoinColumns = @JoinColumn(name = "institution_id"))
+	private List<Institution> institutions;
+
+	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@JoinTable(name = "batch_course", joinColumns = @JoinColumn(name = "batch_id"), inverseJoinColumns = @JoinColumn(name = "course_id"))
+	private List<Course> courses;
 
 }
