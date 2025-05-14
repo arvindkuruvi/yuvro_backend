@@ -1,5 +1,6 @@
 package com.management.yuvro.jpa.entity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import jakarta.persistence.Entity;
@@ -16,12 +17,12 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Institution {
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long institutionId;
-	private String institution;
-	private String institutionCode;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long institutionId;
+    private String institution;
+    private String institutionCode;
 
-	@ManyToMany(mappedBy = "institutions")
-	private List<Batch> batches;
+    @ManyToMany(mappedBy = "institutions")
+    private List<Batch> batches = new ArrayList<>();
 }

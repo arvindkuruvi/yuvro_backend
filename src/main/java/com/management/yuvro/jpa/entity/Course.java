@@ -1,5 +1,6 @@
 package com.management.yuvro.jpa.entity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import jakarta.persistence.CascadeType;
@@ -19,15 +20,15 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Course {
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long courseId;
-	private String courseName;
-	private String description;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long courseId;
+    private String courseName;
+    private String description;
 
-	@ManyToMany(mappedBy = "courses")
-	private List<Batch> batches;
+    @ManyToMany(mappedBy = "courses")
+    private List<Batch> batches = new ArrayList<>();
 
-	@OneToMany(mappedBy = "course", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	private List<Module> modules;
+    @OneToMany(mappedBy = "course", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<Module> modules;
 }

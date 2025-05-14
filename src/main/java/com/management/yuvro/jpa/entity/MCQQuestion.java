@@ -20,6 +20,7 @@ public class MCQQuestion {
 	private Long questionId;
 	private String question;
 	private String questionType;
+	private String description;
 	private String answer;
 
 	@ManyToOne

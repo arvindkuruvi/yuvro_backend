@@ -1,11 +1,10 @@
 package com.management.yuvro.controller;
 
+import com.management.yuvro.dto.CourseDTO;
+import com.management.yuvro.dto.PageDTO;
+import com.management.yuvro.dto.QuestionsDTO;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.management.yuvro.dto.request.SaveQuestionRequest;
 import com.management.yuvro.dto.request.ValidateQuestionRequest;
@@ -35,5 +34,10 @@ public class QuestionController {
 	@PostMapping("validate-question")
 	public ResponseEntity<CommonApiResponse> validateQuestion(@RequestBody ValidateQuestionRequest validateQuestionRequest) {
 		return ResponseEntity.ok().body(questionService.validateQuestion(validateQuestionRequest));
+	}
+
+	@GetMapping("/get-all-questions")
+	public ResponseEntity<PageDTO<QuestionsDTO>> getAllQuestions(@RequestParam(defaultValue = "0", name = "page") int page, @RequestParam(defaultValue = "10", name = "size") int size) {
+		return ResponseEntity.ok().body(questionService.getAllQuestions(page, size));
 	}
 }

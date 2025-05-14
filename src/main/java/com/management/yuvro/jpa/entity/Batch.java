@@ -1,5 +1,6 @@
 package com.management.yuvro.jpa.entity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import jakarta.persistence.CascadeType;
@@ -21,25 +22,25 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Batch {
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long batchId;
-	@Column(unique = true)
-	private String batchName;
-	private String batchTitle;
-	private String description;
-	private String duration;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long batchId;
+    @Column(unique = true)
+    private String batchName;
+    private String batchTitle;
+    private String description;
+    private String duration;
 
-	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	@JoinTable(name = "batch_candidate", joinColumns = @JoinColumn(name = "batch_id"), inverseJoinColumns = @JoinColumn(name = "candidate_id"))
-	private List<Candidate> candidates;
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "batch_candidate", joinColumns = @JoinColumn(name = "batch_id"), inverseJoinColumns = @JoinColumn(name = "candidate_id"))
+    private List<Candidate> candidates = new ArrayList<>();
 
-	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	@JoinTable(name = "batch_institution", joinColumns = @JoinColumn(name = "batch_id"), inverseJoinColumns = @JoinColumn(name = "institution_id"))
-	private List<Institution> institutions;
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "batch_institution", joinColumns = @JoinColumn(name = "batch_id"), inverseJoinColumns = @JoinColumn(name = "institution_id"))
+    private List<Institution> institutions = new ArrayList<>();
 
-	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	@JoinTable(name = "batch_course", joinColumns = @JoinColumn(name = "batch_id"), inverseJoinColumns = @JoinColumn(name = "course_id"))
-	private List<Course> courses;
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "batch_course", joinColumns = @JoinColumn(name = "batch_id"), inverseJoinColumns = @JoinColumn(name = "course_id"))
+    private List<Course> courses = new ArrayList<>();
 
 }

@@ -1,5 +1,6 @@
 package com.management.yuvro.service.impl;
 
+import com.management.yuvro.dto.PageDTO;
 import com.management.yuvro.dto.QuestionsDTO;
 import com.management.yuvro.dto.request.MCQOptionRequest;
 import com.management.yuvro.dto.request.SaveQuestionRequest;
@@ -15,13 +16,17 @@ import com.management.yuvro.jpa.entity.Topic;
 import com.management.yuvro.jpa.repository.MCQOptionRepository;
 import com.management.yuvro.jpa.repository.MCQQuestionRepository;
 import com.management.yuvro.jpa.repository.TopicRepository;
+import com.management.yuvro.mapper.QuestionMapper;
 import com.management.yuvro.service.QuestionService;
 import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
-import org.springframework.util.ObjectUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,6 +40,9 @@ public class QuestionServiceImpl implements QuestionService {
     private MCQQuestionRepository questionRepository;
     private TopicRepository topicRepository;
     private MCQOptionRepository mcqOptionRepository;
+
+    @Autowired
+    QuestionMapper questionMapper;
 
     public QuestionServiceImpl(MCQQuestionRepository questionRepository, TopicRepository topicRepository,
                                MCQOptionRepository mcqOptionRepository) {
@@ -136,6 +144,12 @@ public class QuestionServiceImpl implements QuestionService {
             throw new InvalidOptionException(OPTION_INCORRECT_MSG);
 
         return response;
+    }
+
+    @Override
+    public PageDTO<QuestionsDTO> getAllQuestions(int page, int size) {
+        Pageable pageable = PageRequest.of(page, size, Sort.by("questionId"));
+        return questionMapper.convertPageOfMCQQuestionsToPageDTOOfQuestionsDTO(questionRepository.findAll(pageable));
     }
 
 }
