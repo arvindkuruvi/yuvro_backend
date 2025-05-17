@@ -24,6 +24,7 @@ import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -54,6 +55,7 @@ public class PracticeServiceImpl implements PracticeService {
         var practiceOptional = practiceRepository.findByTopicIdAndCandidate_CandidateId(topicId, candidateId);
         List<QuestionsAttenedDTO> questionsAttenedDTOS = null;
         String msg = null;
+        Practice practice = null;
 
         if (practiceOptional.isEmpty()) {
 
@@ -65,14 +67,18 @@ public class PracticeServiceImpl implements PracticeService {
 
             msg = String.format(PRACTICE_ATTEMPTED_MSG, topicId);
 
-            var practice = practiceOptional.get();
+            practice = practiceOptional.get();
 
             questionsAttenedDTOS = getPracticeQuestionsAttended(practice, topicId);
         }
 
         log.info(msg);
 
-        var getPracticeQuestionResponse = new GetPracticeQuestionResponse(candidateId, topicId, questionsAttenedDTOS);
+        var getPracticeQuestionResponse = new GetPracticeQuestionResponse(candidateId, topicId,
+                practice.getStatus(), practice.isAttempted(), practice.isCompleted(),
+                practice.getAttemptedDateTime() != null ? practice.getAttemptedDateTime().toString() : null,
+                practice.getSubmittedDateTime() != null ? practice.getSubmittedDateTime().toString() : null,
+                questionsAttenedDTOS);
         getPracticeQuestionResponse.setSuccess(true);
         getPracticeQuestionResponse.setMessage(msg);
 
@@ -160,7 +166,7 @@ public class PracticeServiceImpl implements PracticeService {
     }
 
     @Override
-    public CommonApiResponse attemptPractice(AttemptPracticeRequest request) {
+    public GetPracticeQuestionResponse attemptPractice(AttemptPracticeRequest request) {
         var candidateOptional = candidateRepository.findById(request.getCandidateId());
 
         if (candidateOptional.isEmpty())
@@ -176,6 +182,10 @@ public class PracticeServiceImpl implements PracticeService {
             var practice = new Practice();
             practice.setCandidate(candidateOptional.get());
             practice.setTopicId(request.getTopicId());
+            practice.setAttempted(true);
+            practice.setAttemptedDateTime(LocalDateTime.now());
+            practice.setStatus(IN_PROGRESS);
+
             practice = practiceRepository.save(practice);
 
             response.setPracticeId(practice.getPracticeId());
@@ -183,7 +193,24 @@ public class PracticeServiceImpl implements PracticeService {
             response.setPracticeId(practiceOptional.get().getPracticeId());
         }
 
-        return response;
+        return getPracticeIfExists(request.getCandidateId(), request.getTopicId());
     }
 
+    @Override
+    public CommonApiResponse submitPractice(Long candidateId, Long topicId) {
+
+        var practiceOptional = practiceRepository.findByTopicIdAndCandidate_CandidateId(topicId, candidateId);
+
+        if (practiceOptional.isPresent()) {
+            var practice = practiceOptional.get();
+
+            practice.setCompleted(true);
+            practice.setSubmittedDateTime(LocalDateTime.now());
+            practice.setStatus(COMPLETED);
+            practiceRepository.save(practice);
+        } else
+            throw new EntityNotFoundException("Practice not found with topicId :: " + topicId + " and candidateId :: " + candidateId);
+
+        return new CommonApiResponse("Practice submitted successfully for candidate with id : " + candidateId, true);
+    }
 }

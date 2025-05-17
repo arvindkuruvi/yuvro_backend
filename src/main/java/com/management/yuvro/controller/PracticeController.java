@@ -24,7 +24,7 @@ public class PracticeController {
     }
 
     @PostMapping("attempt-practice")
-    public ResponseEntity<CommonApiResponse> attemptPractice(@RequestBody AttemptPracticeRequest request) {
+    public ResponseEntity<GetPracticeQuestionResponse> attemptPractice(@RequestBody AttemptPracticeRequest request) {
         return ResponseEntity.ok().body(practiceService.attemptPractice(request));
     }
 
@@ -36,5 +36,10 @@ public class PracticeController {
     @GetMapping("practice-result")
     public ResponseEntity<PracticeResultResponse> getPracticeResult(@RequestParam(name = "practiceId") Long practiceId) {
         return ResponseEntity.ok().body(practiceService.getPracticeResult(practiceId));
+    }
+
+    @GetMapping("submit-practice")
+    public ResponseEntity<CommonApiResponse> submitPractice(@RequestParam(name = "topicId") Long topicId, @RequestParam(name = "candidateId") Long candidateId) {
+        return ResponseEntity.ok().body(practiceService.submitPractice(candidateId, topicId));
     }
 }

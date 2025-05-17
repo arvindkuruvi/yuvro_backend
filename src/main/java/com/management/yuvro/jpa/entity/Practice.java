@@ -1,5 +1,6 @@
 package com.management.yuvro.jpa.entity;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import jakarta.persistence.CascadeType;
@@ -23,12 +24,18 @@ public class Practice {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long practiceId;
-	
+
 	private Long topicId;
 
 	@ManyToOne
 	@JoinColumn(name = "candidate_id")
 	private Candidate candidate;
+
+	private String status;
+	private boolean attempted;
+	private boolean completed;
+	private LocalDateTime attemptedDateTime;
+	private LocalDateTime submittedDateTime;
 
 	@OneToMany(mappedBy = "practice", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<PracticeQuestion> practiceQuestions;

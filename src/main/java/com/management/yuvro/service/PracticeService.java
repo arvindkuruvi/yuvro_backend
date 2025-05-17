@@ -10,9 +10,11 @@ public interface PracticeService {
 
 	GetPracticeQuestionResponse getPracticeIfExists(Long candidateId, Long topicId);
 
-	CommonApiResponse attemptPractice(AttemptPracticeRequest request);
+	GetPracticeQuestionResponse attemptPractice(AttemptPracticeRequest request);
 
 	CommonApiResponse savePracticeQuestion(SavePracticeQuestionRequest request);
 
 	PracticeResultResponse getPracticeResult(Long practiceId);
+
+	CommonApiResponse submitPractice(Long candidateId, Long topicId);
 }

@@ -24,7 +24,7 @@ public class GlobalExceptionHandler {
                 HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
-    @ExceptionHandler({IllegalArgumentException.class, InvalidOptionException.class})
+    @ExceptionHandler({IllegalArgumentException.class, IllegalStateException.class, InvalidOptionException.class})
     public ResponseEntity<CommonApiResponse> handleBadRequest(Exception ex) {
         return new ResponseEntity<>(new CommonApiResponse(ex.getMessage(), false), HttpStatus.BAD_REQUEST);
     }
