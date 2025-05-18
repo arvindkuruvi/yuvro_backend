@@ -74,7 +74,7 @@ public class PracticeServiceImpl implements PracticeService {
 
         log.info(msg);
 
-        var getPracticeQuestionResponse = new GetPracticeQuestionResponse(candidateId, topicId,
+        var getPracticeQuestionResponse = new GetPracticeQuestionResponse(candidateId, topicId, practice.getPracticeId(),
                 practice.getStatus(), practice.isAttempted(), practice.isCompleted(),
                 practice.getAttemptedDateTime() != null ? practice.getAttemptedDateTime().toString() : null,
                 practice.getSubmittedDateTime() != null ? practice.getSubmittedDateTime().toString() : null,
@@ -174,10 +174,6 @@ public class PracticeServiceImpl implements PracticeService {
 
         var practiceOptional = practiceRepository.findByTopicIdAndCandidate_CandidateId(request.getTopicId(), request.getCandidateId());
 
-        var response = new AttemptPracticeResponse();
-        response.setSuccess(true);
-        response.setMessage("Candidate attempted");
-
         if (practiceOptional.isEmpty()) {
             var practice = new Practice();
             practice.setCandidate(candidateOptional.get());
@@ -186,11 +182,7 @@ public class PracticeServiceImpl implements PracticeService {
             practice.setAttemptedDateTime(LocalDateTime.now());
             practice.setStatus(IN_PROGRESS);
 
-            practice = practiceRepository.save(practice);
-
-            response.setPracticeId(practice.getPracticeId());
-        } else {
-            response.setPracticeId(practiceOptional.get().getPracticeId());
+            practiceRepository.save(practice);
         }
 
         return getPracticeIfExists(request.getCandidateId(), request.getTopicId());

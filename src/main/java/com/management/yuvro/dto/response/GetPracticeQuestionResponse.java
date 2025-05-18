@@ -15,6 +15,7 @@ import java.util.List;
 public class GetPracticeQuestionResponse extends CommonApiResponse {
     private Long candidateId;
     private Long topicId;
+    private Long practiceId;
     private String status;
     private boolean attempted;
     private boolean completed;
