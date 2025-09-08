@@ -13,6 +13,7 @@ public class SaveQuestionRequest {
 	private String question;
 	private String questionType;
 	private String answer;
+	private Integer score;
 	private Long topicId;
 	private Set<MCQOptionRequest> options;
 }

@@ -22,10 +22,15 @@ public class MCQQuestion {
 	private String questionType;
 	private String description;
 	private String answer;
+	private Integer score;
 
 	@ManyToOne
 	@JoinColumn(name = "topic_id")
 	private Topic topic;
+
+	@ManyToOne
+	@JoinColumn(name = "assessment_id")
+	private Assessment assessment;
 
 	@OneToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY, mappedBy = "question")
 	private List<MCQOptions> mcqOptions;

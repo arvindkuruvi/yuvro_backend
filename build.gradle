@@ -2,7 +2,6 @@ plugins {
 	id 'java'
 	id 'org.springframework.boot' version '3.4.4'
 	id 'io.spring.dependency-management' version '1.1.7'
-	id "io.freefair.lombok" version "8.13.1"
 }
 
 group = 'com.yuvro'
@@ -44,6 +43,9 @@ dependencies {
 	implementation 'org.mapstruct:mapstruct:1.5.5.Final'
 	annotationProcessor 'org.mapstruct:mapstruct-processor:1.5.5.Final'
 	annotationProcessor "org.projectlombok:lombok-mapstruct-binding:0.2.0"
+
+	// Apache POI for Excel file handling
+	implementation("org.apache.poi:poi-ooxml:5.4.1")
 }
 
 tasks.named('test') {

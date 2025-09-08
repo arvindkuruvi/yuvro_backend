@@ -1,6 +1,7 @@
 package com.management.yuvro.service.impl;
 
 import com.management.yuvro.dto.QuestionsAttenedDTO;
+import com.management.yuvro.dto.TopicPracticeDTO;
 import com.management.yuvro.dto.request.AttemptPracticeRequest;
 import com.management.yuvro.dto.request.SavePracticeQuestionRequest;
 import com.management.yuvro.dto.response.AttemptPracticeResponse;
@@ -16,7 +17,9 @@ import com.management.yuvro.jpa.repository.CandidateRepository;
 import com.management.yuvro.jpa.repository.MCQQuestionRepository;
 import com.management.yuvro.jpa.repository.PracticeQuestionRepository;
 import com.management.yuvro.jpa.repository.PracticeRepository;
+import com.management.yuvro.mapper.PracticeMapper;
 import com.management.yuvro.service.PracticeService;
+import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,6 +42,9 @@ public class PracticeServiceImpl implements PracticeService {
     private PracticeRepository practiceRepository;
     private MCQQuestionRepository questionRepository;
 
+
+    @Autowired
+    PracticeMapper practiceMapper;
     @Autowired
     CandidateRepository candidateRepository;
     @Autowired
@@ -85,6 +91,7 @@ public class PracticeServiceImpl implements PracticeService {
         return getPracticeQuestionResponse;
     }
 
+    @Transactional
     private List<QuestionsAttenedDTO> getPracticeQuestionsAttended(Practice practice, Long topicId) {
 
         Map<Long, PracticeQuestion> practiceQuestionMap =
@@ -204,5 +211,13 @@ public class PracticeServiceImpl implements PracticeService {
             throw new EntityNotFoundException("Practice not found with topicId :: " + topicId + " and candidateId :: " + candidateId);
 
         return new CommonApiResponse("Practice submitted successfully for candidate with id : " + candidateId, true);
+    }
+
+    @Override
+    public List<TopicPracticeDTO> getTopicCandidatesExcel(Long topicId) {
+        log.info("Fetching topic candidates for topicId: {}", topicId);
+       return practiceMapper.mapToTopicPracticeDTOs(
+                        practiceRepository.findAllCandidatesByTopicId(topicId));
+
     }
 }

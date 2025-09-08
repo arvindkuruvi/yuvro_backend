@@ -24,18 +24,16 @@ public class Practice {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long practiceId;
-
 	private Long topicId;
-
-	@ManyToOne
-	@JoinColumn(name = "candidate_id")
-	private Candidate candidate;
-
 	private String status;
 	private boolean attempted;
 	private boolean completed;
 	private LocalDateTime attemptedDateTime;
 	private LocalDateTime submittedDateTime;
+
+	@ManyToOne
+	@JoinColumn(name = "candidate_id")
+	private Candidate candidate;
 
 	@OneToMany(mappedBy = "practice", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<PracticeQuestion> practiceQuestions;

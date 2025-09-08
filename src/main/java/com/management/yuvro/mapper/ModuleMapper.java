@@ -3,16 +3,14 @@ package com.management.yuvro.mapper;
 import com.management.yuvro.dto.ModuleDTO;
 import com.management.yuvro.dto.PageDTO;
 import com.management.yuvro.jpa.entity.Module;
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
-import org.mapstruct.NullValueMappingStrategy;
-import org.mapstruct.NullValuePropertyMappingStrategy;
+import org.mapstruct.*;
 import org.springframework.data.domain.Page;
 
 import static com.management.yuvro.constants.Constants.RETRIEVE_SUCCESS;
 
 @Mapper(componentModel = "spring",
         nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE,
+        unmappedTargetPolicy = ReportingPolicy.IGNORE,
         nullValueMappingStrategy = NullValueMappingStrategy.RETURN_DEFAULT)
 public interface ModuleMapper {
 

@@ -18,5 +18,6 @@ public class QuestionsDTO {
 	private String question;
 	private String questionType;
 	private String answer;
+	private Integer score;
 	private List<String> options;
 }

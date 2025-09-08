@@ -53,6 +53,7 @@ public class BatchServiceImpl implements BatchService {
         return batchMapper.convertPageOfBatchToPageDTOOfBatchDTO(batchRepository.findAll(pageable));
     }
 
+    @Override
     public Batch findBatchById(Long id) {
         return batchRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException(String.format(ENTITY_NOT_FOUND, BATCH, id)));

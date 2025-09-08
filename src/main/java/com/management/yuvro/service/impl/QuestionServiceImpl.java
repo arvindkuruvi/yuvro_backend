@@ -80,7 +80,7 @@ public class QuestionServiceImpl implements QuestionService {
         return questionResponse;
     }
 
-    private List<MCQOptions> saveMCQOptions(MCQQuestion question, Set<MCQOptionRequest> options) {
+    private void saveMCQOptions(MCQQuestion question, Set<MCQOptionRequest> options) {
 
         log.info("Saving options for question :: {}", question.getQuestionId());
 
@@ -90,7 +90,7 @@ public class QuestionServiceImpl implements QuestionService {
             mcqOptions.add(createOption(option, question));
         }
 
-        return mcqOptionRepository.saveAll(mcqOptions);
+        mcqOptionRepository.saveAll(mcqOptions);
     }
 
     private MCQOptions createOption(MCQOptionRequest optionRequest, MCQQuestion question) {

@@ -1,0 +1,83 @@
+faculty will be crdated and will be added for batches and courses he is part of
+
+
+whe faculty logs in based on the faculty id get the batches he is part of
+ and based on the based get the courses he is part of
+
+get assessments based on courses 
+
+
+need to analyse 
+test endpoint is using modules/1/topic
+based on topic
+
+
+test creted for topic but topic is saved separately and assessment separately
+both should be mapped in some way
+
+
+practice doesn't need to be locked
+
+unlock functionality oly for test
+
+after faculty unlocks a topic, even in practice and test should be unlocked
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+User registration
+
+admin -> candidate and faculty
+
+faculty name
+
+
+
+
+
+stats for practice, excel download prcatice
+
+
+1. notifications
+
+2. assessment and test difference (phase 2 plan)
+
+3. deprecate these endpoints in future versions
+/courses/id/modules
+/modules/id/topics
+/courses
+/courses/id/batches
+/candidates/id/batches
+/assessment/id/questions
+/batches/id/courses
+
+
+Notifications
+notificationType
+createdBy
+notifierId
+createdTime
+
+candidateTaskId
+
+
+
+// view candidate answer from candidate task
+// view assessment from candidate assessment

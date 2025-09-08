@@ -1,10 +1,13 @@
 package com.management.yuvro.service;
 
+import com.management.yuvro.dto.TopicPracticeDTO;
 import com.management.yuvro.dto.request.AttemptPracticeRequest;
 import com.management.yuvro.dto.request.SavePracticeQuestionRequest;
 import com.management.yuvro.dto.response.CommonApiResponse;
 import com.management.yuvro.dto.response.GetPracticeQuestionResponse;
 import com.management.yuvro.dto.response.PracticeResultResponse;
+
+import java.util.List;
 
 public interface PracticeService {
 
@@ -17,4 +20,6 @@ public interface PracticeService {
 	PracticeResultResponse getPracticeResult(Long practiceId);
 
 	CommonApiResponse submitPractice(Long candidateId, Long topicId);
+
+    List<TopicPracticeDTO> getTopicCandidatesExcel(Long topicId);
 }
