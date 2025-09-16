@@ -20,7 +20,7 @@ public interface CandidateRepository extends JpaRepository<Candidate, Long> {
      */
     @Transactional
     @Modifying
-    @Query("DELETE FROM Batch b WHERE b.id IN (SELECT b.id FROM Batch b JOIN b.candidates c WHERE c.id = :candidateId)")
+    @Query(nativeQuery = true, value = "DELETE FROM BATCH_CANDIDATE b WHERE b.candidate_id = :candidateId")
     void deleteCandidatesFromBatches(@Param("candidateId") Long candidateId);
 
     @Query("SELECT c FROM Candidate c JOIN c.batches cl WHERE cl.batchId = :batchId")

@@ -2,9 +2,9 @@ package com.management.yuvro.service.impl;
 
 import com.management.yuvro.dto.CandidateDTO;
 import com.management.yuvro.dto.PageDTO;
+import com.management.yuvro.dto.request.SaveCandidateDTO;
 import com.management.yuvro.dto.response.CommonApiResponse;
 import com.management.yuvro.exceptions.EntityNotFoundException;
-import com.management.yuvro.jpa.entity.Batch;
 import com.management.yuvro.jpa.entity.Candidate;
 import com.management.yuvro.jpa.repository.CandidateAssessmentRepository;
 import com.management.yuvro.jpa.repository.CandidateRepository;
@@ -19,7 +19,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-import static com.management.yuvro.constants.Constants.*;
+import static com.management.yuvro.constants.Constants.CANDIDATE;
+import static com.management.yuvro.constants.Constants.ENTITY_NOT_FOUND;
 
 @Service
 @Slf4j
@@ -36,10 +37,12 @@ public class CandidateServiceImpl implements CandidateService {
     }
 
     @Override
-    public List<Candidate> saveListOfCandidates(List<Candidate> candidates) {
+    public List<CandidateDTO> saveListOfCandidates(List<SaveCandidateDTO> candidates) {
         log.info("Initalizing saving candidates");
 
-        return candidateRepository.saveAll(candidates);
+        return candidateMapper.convertListOfCandidateToListOfCandidateDTO(
+                candidateRepository.saveAll(
+                        candidateMapper.convertListOfSaveCandidateDTOToListOfCandidate(candidates)));
     }
 
     @Override
@@ -54,6 +57,7 @@ public class CandidateServiceImpl implements CandidateService {
         for (Long candidateId : candidateIds) {
             if (candidateRepository.existsById(candidateId)) {
                 log.info("Deleting candidate with ID :: {}", candidateId);
+
                 candidateRepository.deleteCandidatesFromBatches(candidateId);
 
                 candidateAssessmentRepository.deleteAllByCandidateId(candidateId);
@@ -70,8 +74,7 @@ public class CandidateServiceImpl implements CandidateService {
 
     @Override
     public Candidate findCandidateById(Long id) {
-        return candidateRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException(String.format(ENTITY_NOT_FOUND, CANDIDATE, id)));
+        return candidateRepository.findById(id).orElseThrow(() -> new EntityNotFoundException(String.format(ENTITY_NOT_FOUND, CANDIDATE, id)));
     }
 
     @Override

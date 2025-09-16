@@ -4,12 +4,13 @@ import java.util.List;
 
 import com.management.yuvro.dto.CandidateDTO;
 import com.management.yuvro.dto.PageDTO;
+import com.management.yuvro.dto.request.SaveCandidateDTO;
 import com.management.yuvro.dto.response.CommonApiResponse;
 import com.management.yuvro.jpa.entity.Batch;
 import com.management.yuvro.jpa.entity.Candidate;
 
 public interface CandidateService {
-    List<Candidate> saveListOfCandidates(List<Candidate> candidates);
+    List<CandidateDTO> saveListOfCandidates(List<SaveCandidateDTO> candidates);
 
     PageDTO<CandidateDTO> getAllCandidates(int page, int size);
 

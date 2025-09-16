@@ -6,6 +6,7 @@ import com.management.yuvro.dto.CandidateAssessmentDTO;
 import com.management.yuvro.dto.CandidateDTO;
 import com.management.yuvro.dto.PageDTO;
 import com.management.yuvro.dto.QuestionsDTO;
+import com.management.yuvro.dto.request.SaveCandidateDTO;
 import com.management.yuvro.dto.response.CommonApiResponse;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -23,7 +24,7 @@ public class CandidateController {
     }
 
     @PostMapping("save-candidates")
-    public ResponseEntity<List<Candidate>> saveListOfCandidates(@RequestBody List<Candidate> candidates) {
+    public ResponseEntity<List<CandidateDTO>> saveListOfCandidates(@RequestBody List<SaveCandidateDTO> candidates) {
         return ResponseEntity.ok().body(candidateService.saveListOfCandidates(candidates));
     }
 

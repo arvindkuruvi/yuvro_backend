@@ -1,0 +1,35 @@
+services:
+  postgres:
+    image: postgres:14
+    container_name: postgres
+    environment:
+      POSTGRES_DB: yuvro
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin
+    ports:
+      - "5432:5432"
+    restart: unless-stopped
+    # volumes:
+    # - pgdata:/var/lib/postgresql/data
+    networks:
+      - yuvro-network
+
+  yuvro:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    depends_on:
+      - postgres
+    environment:
+      - SPRING_PROFILES_ACTIVE=prod
+    networks:
+      - yuvro-network
+
+# volumes:
+# pgdata:
+
+networks:
+  yuvro-network:
+    driver: bridge
