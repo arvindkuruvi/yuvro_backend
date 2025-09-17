@@ -2,6 +2,7 @@ package com.management.yuvro.mapper;
 
 import com.management.yuvro.dto.BatchDTO;
 import com.management.yuvro.dto.PageDTO;
+import com.management.yuvro.dto.request.CreateBatchRequest;
 import com.management.yuvro.jpa.entity.Batch;
 import org.mapstruct.*;
 import org.springframework.data.domain.Page;
@@ -22,5 +23,7 @@ public interface BatchMapper {
     @Mapping(target = "message", constant = RETRIEVE_SUCCESS)
     @Mapping(target = "success", constant = "true")
     PageDTO<BatchDTO> convertPageOfBatchToPageDTOOfBatchDTO(Page<Batch> page);
+
+    Batch mapCreateBatchRequestToBatch(CreateBatchRequest request);
 }
 

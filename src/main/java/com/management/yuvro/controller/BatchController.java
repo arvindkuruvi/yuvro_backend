@@ -1,15 +1,16 @@
 package com.management.yuvro.controller;
 
 import com.management.yuvro.dto.BatchDTO;
+import com.management.yuvro.dto.CourseDTO;
 import com.management.yuvro.dto.PageDTO;
-import com.management.yuvro.dto.request.AddCandidatesToBatchRequest;
-import com.management.yuvro.dto.request.AddCoursesToBatchRequest;
-import com.management.yuvro.dto.request.AddInstitutionsToBatchRequest;
+import com.management.yuvro.dto.request.*;
 import com.management.yuvro.dto.response.CommonApiResponse;
 import com.management.yuvro.service.BatchService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/batches/")
@@ -35,5 +36,27 @@ public class BatchController {
     @PostMapping("/add-institutions-to-batch")
     public ResponseEntity<CommonApiResponse> addInstitutionsToBatch(@RequestBody AddInstitutionsToBatchRequest request) {
         return ResponseEntity.ok().body(batchService.addInstitutionsToBatch(request));
+    }
+
+    @PostMapping("/create-batch")
+    public ResponseEntity<CommonApiResponse> createBatch(@RequestBody CreateBatchRequest request) {
+        return ResponseEntity.ok().body(batchService.createBatch(request));
+    }
+
+    @GetMapping("/{batchId}/courses")
+    public ResponseEntity<PageDTO<CourseDTO>> getCoursesByBatchId(@PathVariable Long batchId,
+                                                                  @RequestParam(defaultValue = "0", name = "page") int page,
+                                                                  @RequestParam(defaultValue = "10", name = "size") int size) {
+        return ResponseEntity.ok().body(batchService.getCoursesByBatchId(batchId, page, size));
+    }
+
+    @PostMapping("/delete-batches")
+    public ResponseEntity<CommonApiResponse> deleteBatches(@RequestBody List<Long> batchIds) {
+        return ResponseEntity.ok().body(batchService.deleteBatches(batchIds));
+    }
+
+    @PutMapping("/edit-batch")
+    public ResponseEntity<CommonApiResponse> editBatch(@RequestBody EditBatchRequest request) {
+        return ResponseEntity.ok().body(batchService.editBatch(request));
     }
 }

@@ -9,6 +9,7 @@ public class Constants {
     public static final String ASSESSMENT_SENT_MSG = "Assessment sent for id :: %s";
     public static final String TASK_SENT_MSG = "Task sent for id :: %s";
     public static final String SAVE_SUCCESS = "Saved successfully";
+    public static final String DELETE_SUCCESS = "Deleted successfully";
     public static final String RETRIEVE_SUCCESS = "Records retrieved successfully";
     public static final String STATS_RETRIEVE_SUCCESS = "Statistics retrieved successfully";
     public static final String ENTITY_NOT_FOUND = "%s with id :: %s not found";
@@ -23,4 +24,5 @@ public class Constants {
     public static final String IN_PROGRESS = "In progress";
     public static final String CANDIDATE = "Candidate";
     public static final String ATTEMPT_SUCCESS = "Attempted successfully";
+    public static final String ENTITY_EXISTS = "%s with name :: %s already exists";
 }
