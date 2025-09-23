@@ -1,35 +1,37 @@
 services:
-   postgres:
-     image: postgres:14
-     container_name: postgres
-     environment:
-       POSTGRES_DB: yuvro
-       POSTGRES_USER: admin
-       POSTGRES_PASSWORD: admin
-     ports:
-       - "5432:5432"
-     restart: unless-stopped
-     volumes:
-     - pgdata:/var/lib/postgresql/data
-     networks:
-       - yuvro-network
-  
-   yuvro:
-     build:
-       context: ./
-       dockerfile: Dockerfile
-     ports:
-       - "8080:8080"
-     depends_on:
-       - postgres
-       - keycloak
-     environment:
-       - SPRING_PROFILES_ACTIVE=prod
-       - KEYCLOAK_HOST=keycloak
-       - KEYCLOAK_PORT=8080
-     restart: unless-stopped
-     networks:
-       - yuvro-network
+  postgres:
+    image: postgres:14
+    container_name: postgres
+    environment:
+      POSTGRES_DB: yuvro
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin
+    ports:
+      - "5432:5432"
+    restart: unless-stopped
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    networks:
+      - yuvro-network
+
+  yuvro:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    depends_on:
+      - postgres
+      - keycloak
+    environment:
+      - SPRING_PROFILES_ACTIVE=prod
+      - KEYCLOAK_HOST=keycloak
+      - KEYCLOAK_PORT=8080
+      - EMAIL_ID=email
+      - EMAIL_PASSWORD=password
+    restart: unless-stopped
+    networks:
+      - yuvro-network
 
   keycloak:
     image: quay.io/keycloak/keycloak:26.0.5
