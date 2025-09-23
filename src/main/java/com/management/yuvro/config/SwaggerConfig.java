@@ -1,22 +1,32 @@
-//package com.management.yuvro.config;
-//
-//import org.springdoc.core.GroupedOpenApi;
-//import org.springframework.context.annotation.Bean;
-//import org.springframework.context.annotation.Configuration;
-//
-//import io.swagger.v3.oas.models.OpenAPI;
-//import io.swagger.v3.oas.models.info.Info;
-//
-//@Configuration
-//public class SwaggerConfig {
-//
-//	@Bean
-//	OpenAPI customOpenAPI() {
-//		return new OpenAPI().info(new Info().title("Yuvro API").version("1.0").description("A simple Spring Boot"));
-//	}
-//
-//	@Bean
-//	GroupedOpenApi publicApi() {
-//		return GroupedOpenApi.builder().group("v1").pathsToMatch("/api/**").build();
-//	}
-//}
+package com.management.yuvro.config;
+
+import io.swagger.v3.oas.models.Components;
+import io.swagger.v3.oas.models.OpenAPI;
+import io.swagger.v3.oas.models.info.Info;
+import io.swagger.v3.oas.models.security.SecurityRequirement;
+import io.swagger.v3.oas.models.security.SecurityScheme;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
+@Configuration
+public class SwaggerConfig {
+
+    @Bean
+    public OpenAPI customOpenAPI() {
+        final String securitySchemeName = "bearerAuth";
+
+        return new OpenAPI()
+                .info(new Info().title("Yuvro").version("v1"))
+//                .addSecurityItem(new SecurityRequirement().addList(securitySchemeName))
+//                .components(
+//                        new Components().addSecuritySchemes(securitySchemeName,
+//                                new SecurityScheme()
+//                                        .name(securitySchemeName)
+//                                        .type(SecurityScheme.Type.HTTP)
+//                                        .scheme("bearer")
+//                                        .bearerFormat("JWT")
+//                        )
+//                )
+                ;
+    }
+}

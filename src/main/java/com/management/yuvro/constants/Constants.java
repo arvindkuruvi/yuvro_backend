@@ -25,4 +25,5 @@ public class Constants {
     public static final String CANDIDATE = "Candidate";
     public static final String ATTEMPT_SUCCESS = "Attempted successfully";
     public static final String ENTITY_EXISTS = "%s with name :: %s already exists";
+    public static final String ADMIN_ROLE = "YUVRO_ADMIN";
 }

@@ -1,3 +1,11 @@
+keycloak:
+  realm: yuvro-realm
+  auth-server-url: http://keycloak:8080/
+  client-id: yuvro-client
+  client-secret: yuvrosecret123
+  username: yuvro-admin
+  password: yuvro-admin
+
 spring:
   datasource:
     url: jdbc:postgresql://postgres/yuvro
@@ -9,3 +17,33 @@ spring:
     show-sql: true
     hibernate.ddl-auto: update
   h2.console.enabled: false
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://keycloak:8080/realms/yuvro-realm
+      client:
+        registration:
+          keycloak:
+            client-id: yuvro-client
+            client-secret: yuvrosecret123
+            authorization-grant-type: client_credentials
+            redirect-uri: "http://keycloak:8080/login/oauth2/code/keycloak"
+            scope: openid,profile,email
+        provider:
+          keycloak:
+            issuer-uri: http://keycloak:8080/realms/yuvro-realm
+            token-uri: http://keycloak:8080/realms/yuvro-realm/protocol/openid-connect/token
+# spring:
+#   datasource:
+#     url: ${DATABASE_URL}
+#   api:
+#     key: ${API_KEY}
+# services:
+#   app:
+#     image: your-app-image
+#     environment:
+#       - DATABASE_URL=jdbc:postgresql://db:5432/mydb
+#       - API_KEY=abcdef12345
+#     ports:
+#       - "8080:8080"

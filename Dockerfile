@@ -21,7 +21,18 @@ WORKDIR /app
 COPY --from=build /app/build/libs/yuvro.jar yuvro.jar
 
 # Expose the port your application will run on
-EXPOSE 8080
+#EXPOSE 8080
 
 # Command to run the JAR file
-ENTRYPOINT ["java", "-jar", "yuvro.jar"]
+#ENTRYPOINT ["java", "-jar", "yuvro.jar"]
+
+
+# Install curl
+RUN apt-get update && apt-get install -y curl && rm -rf /var/lib/apt/lists/*
+
+# Copy wait script
+COPY wait-for-keycloak.sh /app/wait-for-keycloak.sh
+RUN chmod +x ./wait-for-keycloak.sh
+
+# Use wait script as entrypoint
+ENTRYPOINT ["./wait-for-keycloak.sh"]

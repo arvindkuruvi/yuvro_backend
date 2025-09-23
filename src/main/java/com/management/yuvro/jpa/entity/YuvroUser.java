@@ -13,9 +13,13 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class YuvroUser {
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long userId;
-	private String username;
-	private String type;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long userId;
+    private String username;
+    private String firstName;
+    private String lastName;
+    private String email;
+    private String password;
+    private String type;
 }

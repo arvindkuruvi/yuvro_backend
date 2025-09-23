@@ -8,6 +8,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CommonApiResponse {
-	private String message;
-	private boolean success;
+    private String message;
+    private boolean success;
 }

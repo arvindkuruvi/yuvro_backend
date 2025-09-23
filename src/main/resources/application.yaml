@@ -1,3 +1,16 @@
+logging:
+  level:
+    org.springframework.security: DEBUG  # Enable security-related debug logging
+    org.springframework.security.oauth2: DEBUG  # Enable OAuth2-related debug logging
+
+keycloak:
+  realm: yuvro-realm
+  auth-server-url: http://localhost:9000/
+  client-id: yuvro-client
+  client-secret: yuvrosecret123
+  username: yuvro-admin
+  password: yuvro-admin
+
 spring:
   application.name: yuvro
   datasource:
@@ -10,3 +23,35 @@ spring:
     show-sql: true
     hibernate.ddl-auto: update
   h2.console.enabled: true
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: arvind.arirocker@gmail.com
+    password: "toxp uedi vzsc ucsn"
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+            required: true
+          connectiontimeout: 5000
+          timeout: 5000
+          writetimeout: 5000
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:9000/realms/yuvro-realm
+      client:
+        registration:
+          keycloak:
+            client-id: yuvro-client
+            client-secret: yuvrosecret123
+            authorization-grant-type: client_credentials
+            redirect-uri: "http://localhost:9000/login/oauth2/code/keycloak"
+            scope: openid,profile,email
+        provider:
+          keycloak:
+            issuer-uri: http://localhost:9000/realms/yuvro-realm
+            token-uri: http://localhost:9000/realms/yuvro-realm/protocol/openid-connect/token
