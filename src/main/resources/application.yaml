@@ -1,7 +1,7 @@
 logging:
   level:
-    org.springframework.security: DEBUG  # Enable security-related debug logging
-    org.springframework.security.oauth2: DEBUG  # Enable OAuth2-related debug logging
+    org.springframework.security: DEBUG # Enable security-related debug logging
+    org.springframework.security.oauth2: DEBUG # Enable OAuth2-related debug logging
 
 keycloak:
   realm: yuvro-realm
@@ -26,8 +26,8 @@ spring:
   mail:
     host: smtp.gmail.com
     port: 587
-    username: arvind.arirocker@gmail.com
-    password: "toxp uedi vzsc ucsn"
+    username: email
+    password: password
     properties:
       mail:
         smtp:
