@@ -32,7 +32,10 @@ RUN apt-get update && apt-get install -y curl && rm -rf /var/lib/apt/lists/*
 
 # Copy wait script
 COPY wait-for-keycloak.sh /app/wait-for-keycloak.sh
-RUN chmod +x ./wait-for-keycloak.sh
+RUN chmod +x /app/wait-for-keycloak.sh
+
+# Verify the file exists in /app/
+RUN ls -l /app/
 
 # Use wait script as entrypoint
-ENTRYPOINT ["./wait-for-keycloak.sh"]
+ENTRYPOINT ["/app/wait-for-keycloak.sh"]
